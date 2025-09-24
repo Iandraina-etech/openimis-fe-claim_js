@@ -130,9 +130,14 @@ class AttachmentsDialog extends Component {
       );
     } else if (!_.isEqual(prevProps.claim, this.props.claim) && !!this.props.claim && !this.props.claim.uuid) {
       let claimAttachments = [...(this.props.claim.attachments || [])];
-      if (!readOnly && claimAttachments.length === 0) {
-        claimAttachments.push({});
-        this.props.onUpdated();
+      if (!readOnly) {
+        if (claimAttachments.length === 0) {
+          claimAttachments.push({});
+          this.props.onUpdated();
+        } else if (!this.isEmptyAttachment(_.last(claimAttachments))) {
+          claimAttachments.push({});
+          this.props.onUpdated();
+        }
       }
       this.setState({ open: true, claimUuid: null, claimAttachments, updatedAttachments: new Set() });
     } else if (prevProps.submittingMutation && !this.props.submittingMutation) {
