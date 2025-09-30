@@ -45,6 +45,8 @@ import {
 import ClaimMasterPanel from "./ClaimMasterPanel";
 import ClaimChildPanel from "./ClaimChildPanel";
 import ClaimFeedbackPanel from "./ClaimFeedbackPanel";
+import FloatingTotalAmount from "./FloatingTotalAmount";
+import { claimedAmount, approvedAmount } from "../helpers/amounts";
 
 const CLAIM_FORM_CONTRIBUTION_KEY = "claim.ClaimForm";
 
@@ -480,6 +482,13 @@ class ClaimForm extends Component {
       classes,
     } = this.props;
     const { claim, claim_uuid, lockNew, isSaved } = this.state;
+    console.log("total claimed", totalClaimed)
+
+    // Calculer les totaux
+    const totalClaimed = (claim?.items?.reduce((sum, r) => sum + claimedAmount(r), 0) || 0) + 
+                        (claim?.services?.reduce((sum, r) => sum + claimedAmount(r), 0) || 0);
+    const totalApproved = (claim?.items?.reduce((sum, r) => sum + approvedAmount(r), 0) || 0) + 
+                         (claim?.services?.reduce((sum, r) => sum + approvedAmount(r), 0) || 0);
 
     let readOnly =
       lockNew ||
@@ -594,6 +603,13 @@ class ClaimForm extends Component {
               close={(e) => this.setState({ attachmentsClaim: null })}
               onUpdated={() => this.setState({ forcedDirty: true })}
             />
+            
+            <FloatingTotalAmount 
+              claimed={totalClaimed}
+              approved={forReview || claim?.status >= 4 ? totalApproved : 0}
+              showApproved={forReview || claim?.status >= 4}
+            />
+            
             <Form
               module="claim"
               title="edit.title"
