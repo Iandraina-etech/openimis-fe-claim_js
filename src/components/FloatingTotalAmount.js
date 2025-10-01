@@ -63,7 +63,7 @@ const FloatingTotalAmount = ({
       <Box className={classes.amountContainer}>
         <Box className={classes.amountRow}>
           <Typography variant="subtitle2" className={classes.amountLabel}>
-            {formatMessage("claimedAmount")}
+            {formatMessage("Claimed")}
           </Typography>
           <Typography variant="subtitle1" className={classes.amountValue} color="primary">
             {formatAmount(claimed)}
@@ -75,9 +75,9 @@ const FloatingTotalAmount = ({
             <div className={classes.divider} />
             <Box className={classes.amountRow}>
               <Typography variant="subtitle2" className={classes.amountLabel}>
-                {formatMessage("approvedAmount")}
+                {formatMessage("Approved")}
               </Typography>
-              <Typography variant="subtitle1" className={classes.amountValue} color="secondary">
+              <Typography variant="subtitle1" className={classes.amountValue} color="primary">
                 {formatAmount(approved)}
               </Typography>
             </Box>

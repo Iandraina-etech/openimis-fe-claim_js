@@ -482,9 +482,7 @@ class ClaimForm extends Component {
       classes,
     } = this.props;
     const { claim, claim_uuid, lockNew, isSaved } = this.state;
-    console.log("total claimed", totalClaimed)
 
-    // Calculer les totaux
     const totalClaimed = (claim?.items?.reduce((sum, r) => sum + claimedAmount(r), 0) || 0) + 
                         (claim?.services?.reduce((sum, r) => sum + claimedAmount(r), 0) || 0);
     const totalApproved = (claim?.items?.reduce((sum, r) => sum + approvedAmount(r), 0) || 0) + 
