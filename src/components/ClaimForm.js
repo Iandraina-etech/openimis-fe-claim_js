@@ -606,7 +606,7 @@ class ClaimForm extends Component {
             
             <FloatingTotalAmount 
               claimed={totalClaimed}
-              approved={forReview || claim?.status >= 4 ? totalApproved : 0}
+              approved={forReview || claim?.status >= 2 ? totalApproved : 0}
               showApproved={forReview || claim?.status >= 4}
             />
             

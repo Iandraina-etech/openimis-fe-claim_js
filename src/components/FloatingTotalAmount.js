@@ -1,18 +1,18 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Paper, Typography, Box } from '@material-ui/core';
-import { injectIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useTranslations, useModulesManager } from '@openimis/fe-core';
 
 const styles = (theme) => ({
   toast: {
     position: 'fixed',
     bottom: theme.spacing(3),
-    left: theme.spacing(3),
-    padding: theme.spacing(2),
+    left: theme.spacing(0),
+    padding: theme.spacing(1),
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[6],
-    borderRadius: theme.spacing(1),
+    borderRadius: theme.spacing(0),
     zIndex: 1400,
     minWidth: 250,
     borderLeft: `4px solid ${theme.palette.primary.main}`,
@@ -30,7 +30,7 @@ const styles = (theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    gap: theme.spacing(2),
+    gap: theme.spacing(0),
   },
   amountLabel: {
     color: theme.palette.text.secondary,
@@ -49,12 +49,12 @@ const styles = (theme) => ({
 
 const FloatingTotalAmount = ({ 
   classes, 
-  intl, 
   claimed = 0, 
   approved = 0, 
   showApproved = false 
 }) => {
   if (claimed <= 0) return null;
+  const intl = useIntl();
   const modulesManager = useModulesManager();
   const { formatMessage, formatAmount } = useTranslations("claim", modulesManager);
 
@@ -63,10 +63,10 @@ const FloatingTotalAmount = ({
       <Box className={classes.amountContainer}>
         <Box className={classes.amountRow}>
           <Typography variant="subtitle2" className={classes.amountLabel}>
-            {formatMessage({ id: 'claim.claimed' })}
+            {formatMessage("claimedAmount")}
           </Typography>
           <Typography variant="subtitle1" className={classes.amountValue} color="primary">
-            {formatAmount(intl, claimed)}
+            {formatAmount(claimed)}
           </Typography>
         </Box>
         
@@ -75,10 +75,10 @@ const FloatingTotalAmount = ({
             <div className={classes.divider} />
             <Box className={classes.amountRow}>
               <Typography variant="subtitle2" className={classes.amountLabel}>
-                {formatMessage({ id: 'claim.approved' })}
+                {formatMessage("approvedAmount")}
               </Typography>
               <Typography variant="subtitle1" className={classes.amountValue} color="secondary">
-                {formatAmount(intl, approved)}
+                {formatAmount(approved)}
               </Typography>
             </Box>
           </>
@@ -88,4 +88,4 @@ const FloatingTotalAmount = ({
   );
 };
 
-export default injectIntl(withStyles(styles)(FloatingTotalAmount));
+export default (withStyles(styles)(FloatingTotalAmount));
