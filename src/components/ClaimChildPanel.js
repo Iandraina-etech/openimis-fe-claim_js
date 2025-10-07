@@ -325,8 +325,7 @@ class ClaimChildPanel extends Component {
       `edit.${type}s.${type}`,
       `edit.${type}s.quantity`,
       `edit.${type}s.price`,
-      `edit.${type}s.explanation`,
-      `edit.${type}.totalAmount`,
+      `edit.${type}s.explanation`
     ];
     let subServiceHeaders = [
       `medical.service.code`,
@@ -379,6 +378,7 @@ class ClaimChildPanel extends Component {
           readOnly={!!forReview || readOnly || this.fixedPricesAtEnter}
           value={!!forReview ? i.priceAsked : this.state.data[idx].service?.priceAsked}
           decimal={true}
+          {...(!!forReview ? {style: { width: "100px" }} : {})}
           onChange={(v) => this._onChange(idx, "priceAsked", v)}
         />
       ),
@@ -398,14 +398,7 @@ class ClaimChildPanel extends Component {
           }
           onChange={(v) => this._onChange(idx, "explanation", v)}
         />
-      ),
-      (i, idx) => (
-        <AmountInput
-          readOnly={true}
-          value={i.qtyProvided * i.priceAsked}
-          decimal={true}
-        />
-      ),
+      )
     ];    
 
     let subServicesItemsFormatters = [
@@ -662,6 +655,7 @@ class ClaimChildPanel extends Component {
             value={i.priceApproved}
             decimal={true}
             onChange={(v) => this._onChange(idx, "priceApproved", v)}
+            {...(!!forReview ? {style: { width: "100px" }} : {})}
           />
         ));
       }
@@ -703,6 +697,16 @@ class ClaimChildPanel extends Component {
         (i, idx) => this.formatRejectedReason(i, idx),
       );
     }
+
+    headers.push(`edit.${type}.totalAmount`);
+    itemFormatters.push((i, idx) => (
+      <AmountInput
+        readOnly={true}
+        value={i.qtyProvided * i.priceAsked}
+        decimal={true}
+        {...(!!forReview ? {style: { width: "120px" }} : {})}      />
+    ));
+
     let header = formatMessage(intl, "claim", `edit.${this.props.type}s.title`);
     if (fetchingPricelist) {
       header += formatMessage(intl, "claim", `edit.${this.props.type}s.fetchingPricelist`);
