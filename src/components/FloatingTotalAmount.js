@@ -50,7 +50,7 @@ const styles = (theme) => ({
 const FloatingTotalAmount = ({ 
   classes, 
   claimed = 0, 
-  approved = 0, 
+  approved = 0,
   showApproved = false 
 }) => {
   if (claimed <= 0) return null;

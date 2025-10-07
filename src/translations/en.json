@@ -370,5 +370,10 @@
   "claim.gql_mutation_process_claims_perms": "Claim | Mutation Process Claims",
   "claim.gql_mutation_restore_claims_perms": "Claim | Mutation Restore Claims",
   "claim.gql_mutation_delete_claims_perms": "Claim | Mutation Delete Claims",
-  "claim.claim_print_perms": "Claim | Claim Print"
+  "claim.claim_print_perms": "Claim | Claim Print",
+  "ClaimSummary": "Claim Summary",
+  "totalItems": "Total Items",
+  "totalServices": "Total Services",
+  "totalClaimed": "Total Claimed",
+  "totalApproved": "Total Approved"
 }

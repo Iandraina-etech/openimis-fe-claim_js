@@ -42,6 +42,7 @@ import {
   RIGHT_CLAIMREVIEW,
   REFERRAL,
 } from "../constants";
+import ClaimSummaryPanel from "./ClaimSummaryPanel";
 import ClaimMasterPanel from "./ClaimMasterPanel";
 import ClaimChildPanel from "./ClaimChildPanel";
 import ClaimFeedbackPanel from "./ClaimFeedbackPanel";
@@ -487,6 +488,9 @@ class ClaimForm extends Component {
                         (claim?.services?.reduce((sum, r) => sum + claimedAmount(r), 0) || 0);
     const totalApproved = (claim?.items?.reduce((sum, r) => sum + approvedAmount(r), 0) || 0) + 
                          (claim?.services?.reduce((sum, r) => sum + approvedAmount(r), 0) || 0);
+    const totalItems = claim?.items?.reduce((sum, r) => sum + claimedAmount(r), 0) || 0;
+    const totalServices = claim?.services?.reduce((sum, r) => sum + claimedAmount(r), 0) || 0;                     
+                         
 
     let readOnly =
       lockNew ||
@@ -602,11 +606,11 @@ class ClaimForm extends Component {
               onUpdated={() => this.setState({ forcedDirty: true })}
             />
             
-            <FloatingTotalAmount 
+            {/* <FloatingTotalAmount 
               claimed={totalClaimed}
               approved={forReview || claim?.status >= 2 ? totalApproved : 0}
               showApproved={forReview || claim?.status >= 4}
-            />
+            /> */}
             
             <Form
               module="claim"
@@ -617,6 +621,13 @@ class ClaimForm extends Component {
               openDirty={save || forReview}
               additionalTooltips={tooltips}
               {...editingProps}
+            />
+            <ClaimSummaryPanel 
+              totalClaimed={totalClaimed} 
+              totalApproved={totalApproved} 
+              showApproved={forReview || claim?.status >= 4}
+              totalItems={totalItems}
+              totalServices={totalServices}
             />
             <Contributions contributionKey={CLAIM_FORM_CONTRIBUTION_KEY} {...editingProps} />
           </Fragment>
