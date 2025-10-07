@@ -1,40 +1,11 @@
 import React from "react";
 import { withStyles, withTheme } from "@material-ui/core/styles";
-import { Paper, Typography, Grid } from "@material-ui/core";
-import { useIntl } from "react-intl";
-import { formatAmount, Table } from "@openimis/fe-core";
-import { useTranslations, useModulesManager } from "@openimis/fe-core";
-const styles = (theme) => ({
-    paper: theme.paper.paper,
-});
+import { Paper } from "@material-ui/core";
+import { useTranslations, useModulesManager, Table } from "@openimis/fe-core";
 
-// const styles = (theme) => ({
-//   paper: theme.paper.paper,
-//   header: {
-//     padding: theme.spacing(2),
-//     backgroundColor: theme.palette.primary.light,
-//     color: theme.palette.primary.contrastText,
-//     borderBottom: `1px solid ${theme.palette.divider}`,
-//   },
-//   content: {
-//     padding: theme.spacing(2),
-//   },
-//   label: {
-//     fontWeight: 500,
-//     color: theme.palette.text.secondary,
-//   },
-//   value: {
-//     fontWeight: "bold",
-//     fontSize: "1.1rem",
-//     color: theme.palette.text.primary,
-//   },
-//   approved: {
-//     color: theme.palette.success.main,
-//   },
-//   claimed: {
-//     color: theme.palette.primary.main,
-//   },
-// });
+const styles = (theme) => ({
+  paper: theme.paper.paper,
+});
 
 const ClaimSummaryPanel = ({
   classes,
@@ -44,35 +15,54 @@ const ClaimSummaryPanel = ({
   totalApproved = 0,
   showApproved = false,
 }) => {
-  const intl = useIntl();
   const modulesManager = useModulesManager();
   const { formatMessage, formatAmount } = useTranslations("claim", modulesManager);
 
-  let header = formatMessage("ClaimSummary");
+  // Header du tableau
+  const header = formatMessage("ClaimSummary");
 
-  let headers = [
-    `totalItems`,
-    `totalServices`,
-    `totalClaimed`,
-    `totalApproved`,
+  // Les "lignes" de la table : ici on a juste une ligne avec toutes les valeurs
+  const items = [
+    {
+      totalItems,
+      totalServices,
+      totalClaimed,
+      totalApproved: showApproved ? totalApproved : undefined,
+    },
   ];
-  
-  let itemFormatters = [
-    formatAmount(totalItems),
-    formatAmount(totalServices),
-    formatAmount(totalClaimed),
-    formatAmount(totalApproved),
+
+  // Colonnes à afficher
+  const headers = [
+    "totalItems",
+    "totalServices",
+    "totalClaimed",
   ];
+
+  if (showApproved) headers.push("totalApproved");
+
+  // Formatters pour chaque cellule
+  const itemFormatters = [
+    (row) => formatAmount(row.totalItems),
+    (row) => formatAmount(row.totalServices),
+    (row) => formatAmount(row.totalClaimed),
+  ];
+
+  if (showApproved) {
+    itemFormatters.push((row) => formatAmount(row.totalApproved));
+  }
+
   return (
     <Paper className={classes.paper}>
-        <Table
-            module="claim"
-            header={header}
-            headers={headers}
-            itemFormatters={itemFormatters}
-        />
+      <Table
+        module="claim"
+        header={header}
+        headers={headers}
+        items={items}
+        itemFormatters={itemFormatters}
+        showOrdinalNumber={false} // pas nécessaire ici
+      />
     </Paper>
-    )   
+  );
 };
 
 export default withTheme(withStyles(styles)(ClaimSummaryPanel));
