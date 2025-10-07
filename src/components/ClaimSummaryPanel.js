@@ -18,10 +18,8 @@ const ClaimSummaryPanel = ({
   const modulesManager = useModulesManager();
   const { formatMessage, formatAmount } = useTranslations("claim", modulesManager);
 
-  // Header du tableau
   const header = formatMessage("ClaimSummary");
 
-  // Les "lignes" de la table : ici on a juste une ligne avec toutes les valeurs
   const items = [
     {
       totalItems,
@@ -31,7 +29,6 @@ const ClaimSummaryPanel = ({
     },
   ];
 
-  // Colonnes à afficher
   const headers = [
     "totalItems",
     "totalServices",
@@ -40,7 +37,6 @@ const ClaimSummaryPanel = ({
 
   if (showApproved) headers.push("totalApproved");
 
-  // Formatters pour chaque cellule
   const itemFormatters = [
     (row) => formatAmount(row.totalItems),
     (row) => formatAmount(row.totalServices),
@@ -59,7 +55,7 @@ const ClaimSummaryPanel = ({
         headers={headers}
         items={items}
         itemFormatters={itemFormatters}
-        showOrdinalNumber={false} // pas nécessaire ici
+        showOrdinalNumber={false}
       />
     </Paper>
   );

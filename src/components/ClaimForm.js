@@ -46,7 +46,6 @@ import ClaimSummaryPanel from "./ClaimSummaryPanel";
 import ClaimMasterPanel from "./ClaimMasterPanel";
 import ClaimChildPanel from "./ClaimChildPanel";
 import ClaimFeedbackPanel from "./ClaimFeedbackPanel";
-import FloatingTotalAmount from "./FloatingTotalAmount";
 import { claimedAmount, approvedAmount } from "../helpers/amounts";
 
 const CLAIM_FORM_CONTRIBUTION_KEY = "claim.ClaimForm";
@@ -605,13 +604,6 @@ class ClaimForm extends Component {
               close={(e) => this.setState({ attachmentsClaim: null })}
               onUpdated={() => this.setState({ forcedDirty: true })}
             />
-            
-            {/* <FloatingTotalAmount 
-              claimed={totalClaimed}
-              approved={forReview || claim?.status >= 2 ? totalApproved : 0}
-              showApproved={forReview || claim?.status >= 4}
-            /> */}
-            
             <Form
               module="claim"
               title="edit.title"
