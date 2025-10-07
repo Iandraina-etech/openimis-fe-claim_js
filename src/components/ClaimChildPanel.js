@@ -326,14 +326,19 @@ class ClaimChildPanel extends Component {
       `edit.${type}s.quantity`,
       `edit.${type}s.price`,
       `edit.${type}s.explanation`,
+      `edit.${type}.totalAmount`,
     ];
-
     let subServiceHeaders = [
       `medical.service.code`,
       `medical.service.name`,
       `edit.${type}s.quantity`,
       `claim.edit.items.appPrice`,
     ];
+    const totalAmount = this.state.data.reduce((sum, r) => {
+      const qty = r.qtyProvided || 0;
+      const price = r.priceAsked || 0;
+      return sum + qty * price;
+    }, 0);
 
     let filterItemsOptions = (options) => {
       let currentItemsIds = edited.items ? edited.items.map((claimItem) => claimItem?.item?.id) : [];
@@ -393,8 +398,15 @@ class ClaimChildPanel extends Component {
           }
           onChange={(v) => this._onChange(idx, "explanation", v)}
         />
-      )
-    ];
+      ),
+      (i, idx) => (
+        <AmountInput
+          readOnly={true}
+          value={i.qtyProvided * i.priceAsked}
+          decimal={true}
+        />
+      ),
+    ];    
 
     let subServicesItemsFormatters = [
       (i, idx) => (i.subServices.map((u, udx) => (
@@ -711,6 +723,13 @@ class ClaimChildPanel extends Component {
           disableDeleteOnEmptyRow
           showOrdinalNumber={this.showOrdinalNumber}
         />
+        <Box display="flex" justifyContent="flex-end" padding={2}>
+          <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
+            {formatMessageWithValues(intl, "claim", `edit.${type}s.totalAmountLabel`, {
+              total: formatAmount(intl, totalAmount),
+            })}
+          </Typography>
+        </Box>
       </Paper>
     );
   }

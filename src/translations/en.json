@@ -375,5 +375,10 @@
   "totalItems": "Total Items",
   "totalServices": "Total Services",
   "totalClaimed": "Total Claimed",
-  "totalApproved": "Total Approved"
+  "totalApproved": "Total Approved",
+  "edit.item.totalAmount": "Total",
+  "edit.service.totalAmount": "Total",
+  "edit.items.totalAmountLabel": "Total Items : {total}",
+  "edit.services.totalAmountLabel": "Total Services : {total}"
+
 }
