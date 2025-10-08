@@ -727,7 +727,7 @@ class ClaimChildPanel extends Component {
           disableDeleteOnEmptyRow
           showOrdinalNumber={this.showOrdinalNumber}
         />
-        <Box display="flex" justifyContent="flex-end" padding={2}>
+        <Box display="flex" justifyContent="flex-start" padding={2} paddingLeft={135}>
           <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
             {formatMessageWithValues(intl, "claim", `edit.${type}s.totalAmountLabel`, {
               total: formatAmount(intl, totalAmount),

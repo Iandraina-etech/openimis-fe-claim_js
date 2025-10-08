@@ -24,11 +24,12 @@ const styles = (theme) => ({
     margin: theme.spacing(1, 0),
   },
   totalLabel: {
+    width: '79%',
     fontSize: '1.1rem',
     fontWeight: 500,
   },
   totalValue: {
-    textAlign: 'right',
+    textAlign: 'left',
     fontSize: '1.1rem',
     fontWeight: 500,
   },
