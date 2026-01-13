@@ -51,6 +51,11 @@ export function claimCodeValidationCheck(mm, variables) {
   );
 }
 
+export function setCurrentClaimAdmin(admin) {
+  return (dispatch) => {
+    dispatch({ type: "CLAIM_SET_CURRENT_CLAIM_ADMIN", payload: admin });
+  };
+}
 
 export function claimPreAuthorizationCodeValidationCheck(mm, variables) {
   return graphqlWithVariables(
@@ -572,7 +577,7 @@ export function formatClaimGQL(modulesManager, claim, shouldAutogenerate) {
     prescriberUuid: "${claim.prescriber.uuid}"
     dateFrom: "${claim.dateFrom}"
     ${claim.dateTo ? `dateTo: "${claim.dateTo}"` : ""}
-    icdId: ${decodeId(claim.icd.id)}
+    ${!!claim.icd ? `icdId: ${decodeId(claim.icd.id)}` : ""}
     ${!!claim.icd1 ? `icd1Id: ${decodeId(claim.icd1.id)}` : ""}
     ${!!claim.icd2 ? `icd2Id: ${decodeId(claim.icd2.id)}` : ""}
     ${!!claim.icd3 ? `icd3Id: ${decodeId(claim.icd3.id)}` : ""}
